@@ -4,6 +4,8 @@ import com.josval.backend.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,4 +33,13 @@ public class User {
 
     @Column(name = "role")
     private UserRole userRole;
+
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "address")
+    private String address;
 }

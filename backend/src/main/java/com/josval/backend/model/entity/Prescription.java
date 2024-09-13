@@ -23,6 +23,9 @@ public class Prescription {
     )
     private MedicalHistory medicalHistoryId;
 
+    @Column(name = "medication")
+    private String medication;
+
     @Column(name = "dose")
     private String dose;
 
