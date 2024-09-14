@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IUserService {
     List<User> listAll();
-    User save(UserDTO user);
+    User save(UserDTO userDTO);
     User findById(Integer id);
     User findByEmail(String email);
     void delete(User user);
