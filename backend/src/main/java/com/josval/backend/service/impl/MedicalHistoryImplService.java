@@ -5,11 +5,13 @@ import com.josval.backend.model.dto.MedicalHistoryDTO;
 import com.josval.backend.model.entity.MedicalHistory;
 import com.josval.backend.service.IMedicalHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public class MedicalHistoryService implements IMedicalHistoryService {
+@Service
+public class MedicalHistoryImplService implements IMedicalHistoryService {
     @Autowired
     private MedicalHistoryDAO medicalHistoryDAO;
 

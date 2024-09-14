@@ -6,10 +6,12 @@ import com.josval.backend.model.entity.User;
 import com.josval.backend.service.IUserService;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class UserImplService implements IUserService {
     @Autowired
     private UserDAO userDAO;
