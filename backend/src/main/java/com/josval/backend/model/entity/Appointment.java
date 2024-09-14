@@ -1,8 +1,8 @@
 package com.josval.backend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -27,7 +27,7 @@ public class Appointment {
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     private User doctorId;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Column(name = "appointment_date")
     private Date date;
 
