@@ -1,5 +1,6 @@
 package com.josval.backend.controller;
 
+import com.josval.backend.controller.mapper.UserMapper;
 import com.josval.backend.model.dto.UserDTO;
 import com.josval.backend.model.entity.User;
 import com.josval.backend.model.payload.MessageResponse;
@@ -15,6 +16,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
+    @Autowired
+    private UserMapper userMapper;
+
     @Autowired
     private IUserService userService;
 
@@ -39,23 +43,11 @@ public class UserController {
 
     @PostMapping("user")
     public ResponseEntity<?> create(@RequestBody UserDTO userDTO){
-        User userSave = null;
         try {
-            userSave = userService.save(userDTO);
+            User userSave = userService.save(userDTO);
             return new ResponseEntity<>(MessageResponse.builder()
                     .message("Save successfully")
-                    .object(UserDTO.builder()
-                            .id(userSave.getId())
-                            .firstname(userSave.getFirstname())
-                            .lastname(userSave.getLastname())
-                            .email(userSave.getEmail())
-                            .password(userSave.getPassword())
-                            .userRole(userSave.getUserRole())
-                            .dateOfBirth(userSave.getDateOfBirth())
-                            .phone(userSave.getPhone())
-                            .address(userSave.getAddress())
-                            .build()
-                    )
+                    .object(userMapper.toUserDTO(userSave))
                     .build(),
                     HttpStatus.CREATED
             );

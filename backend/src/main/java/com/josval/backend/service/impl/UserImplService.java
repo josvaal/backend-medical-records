@@ -1,5 +1,6 @@
 package com.josval.backend.service.impl;
 
+import com.josval.backend.controller.mapper.UserMapper;
 import com.josval.backend.model.dao.UserDAO;
 import com.josval.backend.model.dto.UserDTO;
 import com.josval.backend.model.entity.User;
@@ -16,6 +17,9 @@ public class UserImplService implements IUserService {
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @Transactional(readOnly = true)
     @Override
     public List<User> listAll() {
@@ -28,17 +32,9 @@ public class UserImplService implements IUserService {
         StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
         String passwordEncrypted = passwordEncryptor.encryptPassword(userDTO.getPassword());
 
-        User user = User.builder()
-                .id(userDTO.getId())
-                .firstname(userDTO.getFirstname())
-                .lastname(userDTO.getLastname())
-                .email(userDTO.getEmail())
-                .password(passwordEncrypted)
-                .userRole(userDTO.getUserRole())
-                .dateOfBirth(userDTO.getDateOfBirth())
-                .phone(userDTO.getPhone())
-                .address(userDTO.getAddress())
-                .build();
+        User user = userMapper.toUser(userDTO);
+        user.setPassword(passwordEncrypted);
+
         return userDAO.save(user);
     }
 
