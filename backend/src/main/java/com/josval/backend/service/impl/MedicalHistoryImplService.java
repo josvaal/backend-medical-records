@@ -37,9 +37,9 @@ public class MedicalHistoryImplService implements IMedicalHistoryService {
     @Override
     public MedicalHistory save(MedicalHistoryDTO medicalHistoryDTO) {
         MedicalHistory medicalHistory = MedicalHistory.builder()
-                .idMedicalHistory(medicalHistoryDTO.getIdMedicalHistory())
-                .patientId(medicalHistoryDTO.getPatientId())
-                .doctorId(medicalHistoryDTO.getDoctorId())
+                .id(medicalHistoryDTO.getId())
+                .patient(medicalHistoryDTO.getPatient())
+                .doctor(medicalHistoryDTO.getDoctor())
                 .date(medicalHistoryDTO.getDate())
                 .diagnosis(medicalHistoryDTO.getDiagnosis())
                 .treatment(medicalHistoryDTO.getTreatment())

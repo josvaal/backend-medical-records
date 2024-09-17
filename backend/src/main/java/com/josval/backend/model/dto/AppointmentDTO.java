@@ -5,15 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Builder
 @ToString
-public class AppointmentDTO {
-    private Integer idAppointment;
-    private User patientId;
-    private User doctorId;
+public class AppointmentDTO implements Serializable {
+    private Integer id;
+    private User patient;
+    private User doctor;
     private Date date;
     private String reason;
 }

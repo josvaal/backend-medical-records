@@ -3,6 +3,8 @@ package com.josval.backend.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,18 +12,18 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "prescriptions")
-public class Prescription {
+public class Prescription implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPrescription;
+    private Integer id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "medical_history_id",
-            referencedColumnName = "id"
+            foreignKey = @ForeignKey(name = "fk_prescription_medical_history")
     )
-    private MedicalHistory medicalHistoryId;
+    private MedicalHistory medicalHistory;
 
     @Column(name = "medication")
     private String medication;

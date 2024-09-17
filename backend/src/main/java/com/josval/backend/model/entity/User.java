@@ -4,6 +4,7 @@ import com.josval.backend.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -13,11 +14,11 @@ import java.util.Date;
 @Builder
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUser;
+    private Integer id;
 
     @Column(name = "firstname")
     private String firstname;

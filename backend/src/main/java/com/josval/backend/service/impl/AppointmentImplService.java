@@ -37,9 +37,9 @@ public class AppointmentImplService implements IAppointmentService {
     @Override
     public Appointment save(AppointmentDTO appointmentDTO) {
         Appointment appointment = Appointment.builder()
-                .idAppointment(appointmentDTO.getIdAppointment())
-                .patientId(appointmentDTO.getPatientId())
-                .doctorId(appointmentDTO.getDoctorId())
+                .id(appointmentDTO.getId())
+                .patient(appointmentDTO.getPatient())
+                .doctor(appointmentDTO.getDoctor())
                 .date(appointmentDTO.getDate())
                 .reason(appointmentDTO.getReason())
                 .build();

@@ -11,8 +11,8 @@ import java.io.Serializable;
 @Builder
 @ToString
 public class PrescriptionDTO implements Serializable {
-    private Integer idPrescription;
-    private MedicalHistory medicalHistoryId;
+    private Integer id;
+    private MedicalHistory medicalHistory;
     private String medication;
     private String dose;
     private String duration;

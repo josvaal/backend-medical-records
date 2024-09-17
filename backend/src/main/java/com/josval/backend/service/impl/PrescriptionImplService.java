@@ -25,8 +25,8 @@ public class PrescriptionImplService implements IPrescriptionService {
     @Override
     public Prescription save(PrescriptionDTO prescriptionDTO) {
         Prescription prescription = Prescription.builder()
-                .idPrescription(prescriptionDTO.getIdPrescription())
-                .medicalHistoryId(prescriptionDTO.getMedicalHistoryId())
+                .id(prescriptionDTO.getId())
+                .medicalHistory(prescriptionDTO.getMedicalHistory())
                 .medication(prescriptionDTO.getMedication())
                 .dose(prescriptionDTO.getDose())
                 .duration(prescriptionDTO.getDuration())

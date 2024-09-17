@@ -9,7 +9,7 @@ public interface IAppointmentService {
     List<Appointment> listAll();
     List<Appointment> listAllByPatientId(Integer patientId);
     List<Appointment> listAllByDoctorId(Integer doctorId);
-    Appointment save(AppointmentDTO appointmentDTO);
+    Appointment save(AppointmentDTO appointment);
     Appointment findById(Integer id);
     void delete(Appointment appointment);
     boolean existsById(Integer id);

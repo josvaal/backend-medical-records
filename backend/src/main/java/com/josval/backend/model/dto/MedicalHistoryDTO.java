@@ -12,9 +12,9 @@ import java.util.Date;
 @Builder
 @ToString
 public class MedicalHistoryDTO implements Serializable {
-    private Integer idMedicalHistory;
-    private User patientId;
-    private User doctorId;
+    private Integer id;
+    private User patient;
+    private User doctor;
     private Date date;
     private String diagnosis;
     private String treatment;

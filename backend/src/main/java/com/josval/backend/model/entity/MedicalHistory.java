@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -13,25 +14,25 @@ import java.util.Date;
 @Builder
 @Entity
 @Table(name = "medical_history")
-public class MedicalHistory {
+public class MedicalHistory implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idMedicalHistory;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(
             name = "patient_id",
-            referencedColumnName = "id"
+            foreignKey = @ForeignKey(name = "fk_medical_history_patient")
     )
-    private User patientId;
+    private User patient;
 
     @ManyToOne
     @JoinColumn(
             name = "doctor_id",
-            referencedColumnName = "id"
+            foreignKey = @ForeignKey(name = "fk_medical_history_doctor")
     )
-    private User doctorId;
+    private User doctor;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date")

@@ -29,7 +29,7 @@ public class UserImplService implements IUserService {
         String passwordEncrypted = passwordEncryptor.encryptPassword(userDTO.getPassword());
 
         User user = User.builder()
-                .idUser(userDTO.getIdUser())
+                .id(userDTO.getId())
                 .firstname(userDTO.getFirstname())
                 .lastname(userDTO.getLastname())
                 .email(userDTO.getEmail())

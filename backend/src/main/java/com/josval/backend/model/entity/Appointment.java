@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -13,19 +14,19 @@ import java.util.Date;
 @Builder
 @Entity
 @Table(name = "appointments")
-public class Appointment {
+public class Appointment implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAppointment;
+    private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_id", referencedColumnName = "id")
-    private User patientId;
+    @ManyToOne
+    @JoinColumn(name = "patient_id", foreignKey = @ForeignKey(name = "fk_appointment_patient"))
+    private User patient;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
-    private User doctorId;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", foreignKey = @ForeignKey(name = "fk_appointment_doctor"))
+    private User doctor;
 
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Column(name = "appointment_date")

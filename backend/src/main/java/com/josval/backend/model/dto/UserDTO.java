@@ -12,7 +12,7 @@ import java.util.Date;
 @Builder
 @ToString
 public class UserDTO implements Serializable {
-    private Integer idUser;
+    private Integer id;
     private String firstname;
     private String lastname;
     private String email;
