@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface IAppointmentService {
     List<Appointment> listAll();
-    List<Appointment> listAllByUserId(Integer userId);
+    List<Appointment> listAllByDoctorId(Integer doctorId);
+    List<Appointment> listAllByPatientId(Integer patientId);
     Appointment save(AppointmentDTO appointment);
     Appointment findById(Integer id);
     void delete(Appointment appointment);

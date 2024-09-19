@@ -6,5 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface AppointmentDAO extends CrudRepository<Appointment, Integer> {
-    List<Appointment> findAllByUserId(Integer userId);
+    List<Appointment> findAllByPatientId(Integer patientId);
+    List<Appointment> findAllByDoctorId(Integer doctorId);
 }

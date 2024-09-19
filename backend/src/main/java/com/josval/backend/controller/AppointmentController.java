@@ -41,9 +41,28 @@ public class AppointmentController {
     );
   }
 
-  @GetMapping("appointments/user/{id}")
-  public ResponseEntity<?> showAllByUserId(@PathVariable Integer id) {
-    List<Appointment> getAppointments = appointmentService.listAllByUserId(id);
+  @GetMapping("appointments/doctor/{id}")
+  public ResponseEntity<?> showAllByDoctorId(@PathVariable Integer id) {
+    List<Appointment> getAppointments = appointmentService.listAllByDoctorId(id);
+    if (getAppointments == null) {
+      return new ResponseEntity<>(MessageResponse.builder()
+          .message("No records found")
+          .object(null)
+          .build(),
+          HttpStatus.OK
+      );
+    }
+    return new ResponseEntity<>(MessageResponse.builder()
+        .message("Success")
+        .object(getAppointments)
+        .build(),
+        HttpStatus.OK
+    );
+  }
+
+  @GetMapping("appointments/patient/{id}")
+  public ResponseEntity<?> showAllByPatientId(@PathVariable Integer id) {
+    List<Appointment> getAppointments = appointmentService.listAllByPatientId(id);
     if (getAppointments == null) {
       return new ResponseEntity<>(MessageResponse.builder()
           .message("No records found")
