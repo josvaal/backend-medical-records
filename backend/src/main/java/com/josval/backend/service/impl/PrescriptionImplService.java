@@ -42,8 +42,8 @@ public class PrescriptionImplService implements IPrescriptionService {
 
     @Transactional(readOnly = true)
     @Override
-    public Prescription findByMedicalHistoryId(Integer medicalHistoryId) {
-        return prescriptionDAO.findByMedicalHistoryId(medicalHistoryId).orElse(null);
+    public List<Prescription> listAllByMedicalHistoryId(Integer medicalHistoryId) {
+        return prescriptionDAO.findAllByMedicalHistoryId(medicalHistoryId);
     }
 
     @Transactional

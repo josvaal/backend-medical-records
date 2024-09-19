@@ -9,7 +9,7 @@ public interface IPrescriptionService {
     List<Prescription> listAll();
     Prescription save(PrescriptionDTO prescriptionDTO);
     Prescription findById(Integer id);
-    Prescription findByMedicalHistoryId(Integer medicalHistoryId);
+    List<Prescription> listAllByMedicalHistoryId(Integer medicalHistoryId);
     void delete(Prescription prescription);
     boolean existsById(Integer id);
 }
