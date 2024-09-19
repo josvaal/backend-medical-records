@@ -27,14 +27,8 @@ public class AppointmentImplService implements IAppointmentService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Appointment> listAllByPatientId(Integer patientId) {
-        return appointmentDAO.findAllByPatientId(patientId);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Appointment> listAllByDoctorId(Integer doctorId) {
-        return appointmentDAO.findAllByDoctorId(doctorId);
+    public List<Appointment> listAllByUserId(Integer userId) {
+        return appointmentDAO.findAllByUserId(userId);
     }
 
     @Transactional
