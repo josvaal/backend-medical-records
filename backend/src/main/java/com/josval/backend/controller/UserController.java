@@ -5,6 +5,7 @@ import com.josval.backend.model.dto.UserDTO;
 import com.josval.backend.model.entity.User;
 import com.josval.backend.model.payload.MessageResponse;
 import com.josval.backend.service.IUserService;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -122,5 +123,45 @@ public class UserController {
         .build(),
         HttpStatus.OK
     );
+  }
+
+  @PostMapping("user/login")
+  public ResponseEntity<?> login(@RequestBody UserDTO userDTO){
+    try {
+      User user = userService.findByEmail(userDTO.getEmail());
+      if (user == null) {
+        return new ResponseEntity<>(MessageResponse.builder()
+            .message("This user was not found")
+            .object(null)
+            .build(),
+            HttpStatus.NOT_FOUND
+        );
+      }
+      StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+      boolean isPasswordCorrect = passwordEncryptor.checkPassword(userDTO.getPassword(), user.getPassword());
+
+      if (!isPasswordCorrect) {
+        return new ResponseEntity<>(MessageResponse.builder()
+            .message("Passwords do not match")
+            .object(null)
+            .build(),
+            HttpStatus.UNAUTHORIZED
+        );
+      }
+
+      return new ResponseEntity<>(MessageResponse.builder()
+          .message("Success")
+          .object(userMapper.toUserDTO(user))
+          .build(),
+          HttpStatus.OK
+      );
+    } catch (DataAccessException e){
+      return new ResponseEntity<>(MessageResponse.builder()
+          .message(e.getMessage())
+          .object(null)
+          .build(),
+          HttpStatus.METHOD_NOT_ALLOWED
+      );
+    }
   }
 }

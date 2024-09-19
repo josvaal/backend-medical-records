@@ -1,5 +1,6 @@
 package com.josval.backend.service.impl;
 
+import com.josval.backend.controller.mapper.AppointmentMapper;
 import com.josval.backend.model.dao.AppointmentDAO;
 import com.josval.backend.model.dto.AppointmentDTO;
 import com.josval.backend.model.entity.Appointment;
@@ -12,6 +13,9 @@ import java.util.List;
 
 @Service
 public class AppointmentImplService implements IAppointmentService {
+    @Autowired
+    AppointmentMapper appointmentMapper;
+
     @Autowired
     AppointmentDAO appointmentDAO;
 
@@ -36,13 +40,7 @@ public class AppointmentImplService implements IAppointmentService {
     @Transactional
     @Override
     public Appointment save(AppointmentDTO appointmentDTO) {
-        Appointment appointment = Appointment.builder()
-                .id(appointmentDTO.getId())
-                .patient(appointmentDTO.getPatient())
-                .doctor(appointmentDTO.getDoctor())
-                .date(appointmentDTO.getDate())
-                .reason(appointmentDTO.getReason())
-                .build();
+        Appointment appointment = appointmentMapper.toAppointment(appointmentDTO);
         return appointmentDAO.save(appointment);
     }
 
