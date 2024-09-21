@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Builder
@@ -16,4 +17,6 @@ public class PrescriptionDTO implements Serializable {
     private String medication;
     private String dose;
     private String duration;
+    private Date createdAt;
+    private Date updatedAt;
 }

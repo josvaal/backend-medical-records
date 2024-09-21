@@ -3,8 +3,10 @@ package com.josval.backend.controller;
 import com.josval.backend.controller.mapper.UserMapper;
 import com.josval.backend.model.dto.UserDTO;
 import com.josval.backend.model.entity.User;
+import com.josval.backend.model.enums.UserRole;
 import com.josval.backend.model.payload.MessageResponse;
 import com.josval.backend.service.IUserService;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -125,7 +127,43 @@ public class UserController {
     );
   }
 
-  @PostMapping("user/login")
+  @GetMapping("users/role/{role}")
+  public ResponseEntity<?> showAllByUserRole(
+      @Parameter(description = "Role of the user: 0 = Patient, 1 = Doctor")
+      @PathVariable Integer role
+  ){
+    UserRole userRole;
+
+    try {
+      userRole = UserRole.values()[role];
+    } catch (ArrayIndexOutOfBoundsException e){
+      return new ResponseEntity<>(MessageResponse
+          .builder()
+          .message("Invalid role")
+          .object(null)
+          .build(),
+          HttpStatus.BAD_REQUEST
+      );
+    }
+
+    List<User> getUsers = userService.findAllByUserRole(userRole);
+    if (getUsers == null) {
+      return new ResponseEntity<>(MessageResponse.builder()
+          .message("No records found")
+          .object(null)
+          .build(),
+          HttpStatus.OK
+      );
+    }
+    return new ResponseEntity<>(MessageResponse.builder()
+        .message("Success")
+        .object(getUsers)
+        .build(),
+        HttpStatus.OK
+    );
+  }
+
+  @PostMapping("auth/login")
   public ResponseEntity<?> login(@RequestBody UserDTO userDTO){
     try {
       User user = userService.findByEmail(userDTO.getEmail());

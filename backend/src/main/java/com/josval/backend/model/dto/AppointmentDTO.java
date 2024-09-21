@@ -17,4 +17,6 @@ public class AppointmentDTO implements Serializable {
     private User doctor;
     private Date date;
     private String reason;
+    private Date createdAt;
+    private Date updatedAt;
 }

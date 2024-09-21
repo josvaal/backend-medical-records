@@ -21,4 +21,6 @@ public class UserDTO implements Serializable {
     private Date dateOfBirth;
     private String phone;
     private String address;
+    private Date createdAt;
+    private Date updatedAt;
 }

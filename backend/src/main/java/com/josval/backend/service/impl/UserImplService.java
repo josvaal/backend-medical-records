@@ -4,6 +4,7 @@ import com.josval.backend.controller.mapper.UserMapper;
 import com.josval.backend.model.dao.UserDAO;
 import com.josval.backend.model.dto.UserDTO;
 import com.josval.backend.model.entity.User;
+import com.josval.backend.model.enums.UserRole;
 import com.josval.backend.service.IUserService;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,11 @@ public class UserImplService implements IUserService {
     @Override
     public User findByEmail(String email) {
         return userDAO.findByEmail(email).orElse(null);
+    }
+
+    @Override
+    public List<User> findAllByUserRole(UserRole userRole) {
+        return userDAO.findAllByUserRole(userRole);
     }
 
     @Transactional

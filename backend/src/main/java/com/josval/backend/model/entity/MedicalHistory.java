@@ -2,6 +2,8 @@ package com.josval.backend.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -43,4 +45,12 @@ public class MedicalHistory implements Serializable {
 
     @Column(name = "treatment")
     private String treatment;
+
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 }

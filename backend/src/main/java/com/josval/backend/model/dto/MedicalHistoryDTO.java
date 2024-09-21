@@ -18,4 +18,6 @@ public class MedicalHistoryDTO implements Serializable {
     private Date date;
     private String diagnosis;
     private String treatment;
+    private Date createdAt;
+    private Date updatedAt;
 }
