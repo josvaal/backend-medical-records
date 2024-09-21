@@ -13,12 +13,17 @@ import { Appointments } from './pages/appointments'
 import { AppointmentsPatient } from './pages/appointments_patient'
 import { Appointment } from './pages/appointment'
 import { AppointmentsDoctor } from './pages/appointments_doctor'
+import { Login } from './pages/login'
+import { Register } from './pages/register'
 
 export function App() {
   return (
     <Router>
       {/* Home route */}
       <Home path="/" />
+      {/* Auth routes */}
+      <Login path="/login" />
+      <Register path="/register" />
       {/* Patient routes */}
       <Patients path="/patients" />
       <Patient path="/patient/:id" />
