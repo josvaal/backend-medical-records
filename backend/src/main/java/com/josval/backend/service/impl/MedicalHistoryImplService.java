@@ -1,5 +1,6 @@
 package com.josval.backend.service.impl;
 
+import com.josval.backend.controller.mapper.MedicalHistoryMapper;
 import com.josval.backend.model.dao.MedicalHistoryDAO;
 import com.josval.backend.model.dto.MedicalHistoryDTO;
 import com.josval.backend.model.entity.MedicalHistory;
@@ -14,6 +15,9 @@ import java.util.List;
 public class MedicalHistoryImplService implements IMedicalHistoryService {
     @Autowired
     private MedicalHistoryDAO medicalHistoryDAO;
+    
+    @Autowired
+    private MedicalHistoryMapper medicalHistoryMapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -36,14 +40,7 @@ public class MedicalHistoryImplService implements IMedicalHistoryService {
     @Transactional
     @Override
     public MedicalHistory save(MedicalHistoryDTO medicalHistoryDTO) {
-        MedicalHistory medicalHistory = MedicalHistory.builder()
-                .id(medicalHistoryDTO.getId())
-                .patient(medicalHistoryDTO.getPatient())
-                .doctor(medicalHistoryDTO.getDoctor())
-                .date(medicalHistoryDTO.getDate())
-                .diagnosis(medicalHistoryDTO.getDiagnosis())
-                .treatment(medicalHistoryDTO.getTreatment())
-                .build();
+        MedicalHistory medicalHistory = medicalHistoryMapper.toMedicalHistory(medicalHistoryDTO);
         return medicalHistoryDAO.save(medicalHistory);
     }
 

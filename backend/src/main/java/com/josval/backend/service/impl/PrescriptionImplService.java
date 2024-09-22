@@ -1,5 +1,6 @@
 package com.josval.backend.service.impl;
 
+import com.josval.backend.controller.mapper.PrescriptionMapper;
 import com.josval.backend.model.dao.PrescriptionDAO;
 import com.josval.backend.model.dto.PrescriptionDTO;
 import com.josval.backend.model.entity.Prescription;
@@ -14,6 +15,9 @@ import java.util.List;
 public class PrescriptionImplService implements IPrescriptionService {
     @Autowired
     PrescriptionDAO prescriptionDAO;
+    
+    @Autowired
+    PrescriptionMapper prescriptionMapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -24,13 +28,7 @@ public class PrescriptionImplService implements IPrescriptionService {
     @Transactional
     @Override
     public Prescription save(PrescriptionDTO prescriptionDTO) {
-        Prescription prescription = Prescription.builder()
-                .id(prescriptionDTO.getId())
-                .medicalHistory(prescriptionDTO.getMedicalHistory())
-                .medication(prescriptionDTO.getMedication())
-                .dose(prescriptionDTO.getDose())
-                .duration(prescriptionDTO.getDuration())
-                .build();
+        Prescription prescription = prescriptionMapper.toPrescription(prescriptionDTO);
         return prescriptionDAO.save(prescription);
     }
 

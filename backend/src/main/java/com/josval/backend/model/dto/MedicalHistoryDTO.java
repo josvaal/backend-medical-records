@@ -1,6 +1,5 @@
 package com.josval.backend.model.dto;
 
-import com.josval.backend.model.entity.User;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;

@@ -6,7 +6,6 @@ import com.josval.backend.model.dto.UserDTO;
 import com.josval.backend.model.entity.User;
 import com.josval.backend.model.enums.UserRole;
 import com.josval.backend.service.IUserService;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
