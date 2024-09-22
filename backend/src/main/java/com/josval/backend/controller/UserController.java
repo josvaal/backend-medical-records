@@ -114,30 +114,4 @@ public class UserController {
 				HttpStatus.OK);
 	}
 
-	@PostMapping("auth/login")
-	public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
-		try {
-			User user = userService.findByEmail(userDTO.getEmail());
-			if (user == null) {
-				return new ResponseEntity<>(
-						MessageResponse.builder().message("This user was not found").object(null).build(),
-						HttpStatus.NOT_FOUND);
-			}
-			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-			boolean isPasswordCorrect = passwordEncryptor.checkPassword(userDTO.getPassword(), user.getPassword());
-
-			if (!isPasswordCorrect) {
-				return new ResponseEntity<>(
-						MessageResponse.builder().message("Passwords do not match").object(null).build(),
-						HttpStatus.UNAUTHORIZED);
-			}
-
-			return new ResponseEntity<>(
-					MessageResponse.builder().message("Success").object(userMapper.toUserDTO(user)).build(),
-					HttpStatus.OK);
-		} catch (DataAccessException e) {
-			return new ResponseEntity<>(MessageResponse.builder().message(e.getMessage()).object(null).build(),
-					HttpStatus.METHOD_NOT_ALLOWED);
-		}
-	}
 }

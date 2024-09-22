@@ -1,7 +1,11 @@
 package com.josval.backend.controller.mapper;
 
+import com.josval.backend.model.dto.RegisterDTO;
 import com.josval.backend.model.dto.UserDTO;
 import com.josval.backend.model.entity.User;
+
+import jakarta.validation.Valid;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

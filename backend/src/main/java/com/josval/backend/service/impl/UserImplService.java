@@ -30,11 +30,7 @@ public class UserImplService implements IUserService {
     @Transactional
     @Override
     public User save(UserDTO userDTO) {
-        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-        String passwordEncrypted = passwordEncryptor.encryptPassword(userDTO.getPassword());
-
         User user = userMapper.toUser(userDTO);
-        user.setPassword(passwordEncrypted);
 
         return userDAO.save(user);
     }

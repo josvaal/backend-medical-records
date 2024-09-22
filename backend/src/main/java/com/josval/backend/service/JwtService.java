@@ -52,7 +52,6 @@ public class JwtService {
 				return claims;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		
 		return null;
