@@ -2,6 +2,7 @@ package com.josval.backend.model.entity;
 
 import com.josval.backend.model.enums.UserRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -32,6 +33,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "password")
+    @Size(min = 6, message = "Minimun password length is 6 characters")
     private String password;
 
     @Column(name = "role")
