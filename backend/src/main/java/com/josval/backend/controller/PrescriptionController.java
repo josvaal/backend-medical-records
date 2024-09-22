@@ -1,8 +1,10 @@
 package com.josval.backend.controller;
 
 import com.josval.backend.controller.mapper.AppointmentMapper;
+import com.josval.backend.controller.mapper.MedicalHistoryMapper;
 import com.josval.backend.controller.mapper.PrescriptionMapper;
 import com.josval.backend.model.dto.AppointmentDTO;
+import com.josval.backend.model.dto.MedicalHistoryDTO;
 import com.josval.backend.model.dto.PrescriptionDTO;
 import com.josval.backend.model.entity.Appointment;
 import com.josval.backend.model.entity.MedicalHistory;
@@ -23,6 +25,9 @@ import java.util.List;
 public class PrescriptionController {
   @Autowired
   private PrescriptionMapper prescriptionMapper;
+  
+  @Autowired
+  private MedicalHistoryMapper medicalHistoryMapper;
 
   @Autowired
   private IPrescriptionService prescriptionService;
@@ -69,9 +74,10 @@ public class PrescriptionController {
   public ResponseEntity<?> create(@RequestBody PrescriptionDTO prescriptionDTO){
     try {
       Prescription prescriptionSave = prescriptionService.save(prescriptionDTO);
+      
       return new ResponseEntity<>(MessageResponse.builder()
           .message("Save successfully")
-          .object(prescriptionMapper.toPrescriptionDto(prescriptionSave))
+          .object(prescriptionSave)
           .build(),
           HttpStatus.CREATED
       );

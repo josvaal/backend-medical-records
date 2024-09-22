@@ -7,7 +7,6 @@ import com.josval.backend.model.enums.UserRole;
 import com.josval.backend.model.payload.MessageResponse;
 import com.josval.backend.service.IUserService;
 import io.swagger.v3.oas.annotations.Parameter;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;

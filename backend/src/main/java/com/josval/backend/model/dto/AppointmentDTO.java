@@ -13,8 +13,8 @@ import java.util.Date;
 @ToString
 public class AppointmentDTO implements Serializable {
     private Integer id;
-    private User patient;
-    private User doctor;
+    private UserDTO patient;
+    private UserDTO doctor;
     private Date date;
     private String reason;
     private Date createdAt;
