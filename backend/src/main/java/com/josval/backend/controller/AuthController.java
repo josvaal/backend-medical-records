@@ -7,7 +7,7 @@ import com.josval.backend.model.dto.UserDTO;
 import com.josval.backend.model.entity.User;
 import com.josval.backend.model.payload.MessageResponse;
 import com.josval.backend.service.IUserService;
-import com.josval.backend.service.JwtService;
+import com.josval.backend.service.security.JwtService;
 
 import jakarta.validation.Valid;
 
@@ -114,7 +114,8 @@ public class AuthController {
 	@PostMapping("auth/login")
 	public ResponseEntity<?> login(
 			@Valid @RequestBody LoginDTO loginDto,
-			BindingResult result) {
+			BindingResult result
+	) {
 		
 		
 		if (result.hasErrors()) {
@@ -130,8 +131,7 @@ public class AuthController {
             		HttpStatus.BAD_REQUEST);
         }
 		
-		try {
-			System.out.println(bCryptEncoder.matches("15022004", "$2a$10$xcNBu4OeuziD3rJ7thmTlu3Xajt6fD8ji/ufdtYZLeF5y/LbqSAHa"));
+		try {			
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
 							loginDto.getEmail(),

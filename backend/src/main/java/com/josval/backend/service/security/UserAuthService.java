@@ -1,4 +1,4 @@
-package com.josval.backend.service;
+package com.josval.backend.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.josval.backend.controller.mapper.UserMapper;
 import com.josval.backend.model.dto.UserDTO;
+import com.josval.backend.service.IUserService;
 
 @Service
 public class UserAuthService implements UserDetailsService {

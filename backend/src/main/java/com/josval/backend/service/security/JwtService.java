@@ -1,4 +1,4 @@
-package com.josval.backend.service;
+package com.josval.backend.service.security;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
