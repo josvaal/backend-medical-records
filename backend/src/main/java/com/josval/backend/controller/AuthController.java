@@ -9,6 +9,8 @@ import com.josval.backend.model.payload.MessageResponse;
 import com.josval.backend.service.IUserService;
 import com.josval.backend.service.security.JwtService;
 
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +164,52 @@ public class AuthController {
                     		.object(null)
                     		.build(),
                     		HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/auth/profile")
+	public ResponseEntity<?> profile(
+			HttpServletRequest request
+	){
+		try {
+			
+			String bearerToken = request.getHeader("Authorization");
+	        if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
+	            return new ResponseEntity<>(MessageResponse.builder()
+	                    .message("Authorization Bearer token not found")
+	                    .object(null)
+	                    .build(),
+	                    HttpStatus.UNAUTHORIZED);
+	        }
+	        
+	        String token = bearerToken.substring(7);
+	        
+	        Claims claims = jwtService.getTokenClaims(token);
+	        if (claims == null) {
+	            return new ResponseEntity<>(MessageResponse.builder()
+	                    .message("Invalid Token")
+	                    .object(null)
+	                    .build(),
+	                    HttpStatus.UNAUTHORIZED);
+	        }
+	        
+	        String email = claims.getSubject();
+	        
+	        UserDTO user = userMapper.toUserDTO(userService.findByEmail(email));
+	        user.setPassword(null);
+	        
+	        return new ResponseEntity<>(MessageResponse.builder()
+	                .message("Profile retrieved successfully")
+	                .object(user)
+	                .build(),
+	                HttpStatus.OK);
+	        
+		} catch (Exception e) {
+			return new ResponseEntity<>(MessageResponse.builder()
+	                .message(e.getMessage())
+	                .object(null)
+	                .build(),
+	                HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
