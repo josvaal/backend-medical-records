@@ -17,13 +17,13 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-	@Value("${JWT_SECRET_KEY}")
+	@Value("${jwt.secret-key}")
 	private String secretKey;
 	
-	@Value("${JWT_EXPRIATION_TIME}")
+	@Value("${jwt.expiration-time}")
 	private Long expirationTime;
 	
-	@Value("${JWT_TOKEN_ISSUER}")
+	@Value("${jwt.issuer}")
 	private String issuer;
 	
 	public String createJwtToken(UserDTO userDTO) {
