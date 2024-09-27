@@ -28,7 +28,7 @@ public class SecurityConfig {
 	@Autowired
 	private JwtAuthFilter filter;
 	
-	@Value("${frontend.origin}")
+	@Value("${FRONTEND_ORIGIN}")
 	private String origin;
 	
 	@Bean
