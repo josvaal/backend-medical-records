@@ -15,12 +15,13 @@ export function Profile() {
       return;
     }
 
-    await fetchData("get", apiUrl + "auth/profile", null, {
+    const response = await fetchData("get", apiUrl + "auth/profile", null, {
       Authorization: `Bearer ${token}`,
     });
+    if (response.status == 401) {
+      setToken("");
+    }
   }, [token]);
-
-  // {"message":"Profile retrieved successfully","object":{"id":12,"firstname":"José","lastname":"Masías","email":"josval@gmail.com","password":null,"userRole":"DOCTOR","dateOfBirth":"2024-09-22T05:35:48.719+00:00","phone":"906706357","address":"28 de Julio #330","createdAt":"2024-09-22T20:34:15.705+00:00","updatedAt":"2024-09-22T20:34:15.705+00:00"}}
 
   return (
     <>

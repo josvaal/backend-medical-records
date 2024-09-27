@@ -37,7 +37,7 @@ export const useFetch = () => {
       return response.data;
     } catch (err) {
       setError(err);
-      return null
+      return err.response
     } finally {
       setIsLoading(false);
     }
