@@ -212,4 +212,48 @@ public class AuthController {
 	                HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@PostMapping("/auth/verifyLogin")
+	public ResponseEntity<?> verifyLogin(HttpServletRequest request) {
+	    try {
+	        String bearerToken = request.getHeader("Authorization");
+	        if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
+	            return new ResponseEntity<>(MessageResponse.builder()
+	                    .message("Authorization Bearer token not found")
+	                    .object(null)
+	                    .build(),
+	                    HttpStatus.UNAUTHORIZED);
+	        }
+
+	        String token = bearerToken.substring(7);
+
+	        Claims claims = jwtService.getTokenClaims(token);
+	        if (claims == null) {
+	            return new ResponseEntity<>(MessageResponse.builder()
+	                    .message("Invalid Token")
+	                    .object(null)
+	                    .build(),
+	                    HttpStatus.UNAUTHORIZED);
+	        }
+
+	        String email = claims.getSubject();
+
+	        UserDTO user = userMapper.toUserDTO(userService.findByEmail(email));
+	        user.setPassword(null);
+
+	        return new ResponseEntity<>(MessageResponse.builder()
+	                .message("Token is valid. User authenticated successfully.")
+	                .object(user)
+	                .build(),
+	                HttpStatus.OK);
+
+	    } catch (Exception e) {
+	        return new ResponseEntity<>(MessageResponse.builder()
+	                .message(e.getMessage())
+	                .object(null)
+	                .build(),
+	                HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+
 }
