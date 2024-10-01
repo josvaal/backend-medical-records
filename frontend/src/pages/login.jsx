@@ -20,15 +20,14 @@ export function Login() {
       formData,
       {}
     );
-    // console.log(response);
-    setToken(response.object.token);
+    setToken(response.data.object.token);
   };
 
   useEffect(() => {
     if (token != "") {
       route("/profile");
     }
-  }, [token]);
+  }, [data, token, isLoading]);
 
   return (
     <>

@@ -10,17 +10,9 @@ export function Profile() {
   const { data, isLoading, error, fetchData } = useFetch();
 
   useEffect(async () => {
-    if (token == "") {
-      route("/login");
-      return;
-    }
-
-    const response = await fetchData("get", apiUrl + "auth/profile", null, {
+    await fetchData("get", apiUrl + "auth/profile", null, {
       Authorization: `Bearer ${token}`,
     });
-    if (response.status == 401) {
-      setToken("");
-    }
   }, [token]);
 
   return (
