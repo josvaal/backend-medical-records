@@ -1,13 +1,14 @@
 import { useEffect } from "preact/hooks";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { route } from "preact-router";
 import { useFetch } from "../hooks/useFetch";
+import { useAuthStore } from "../hooks/useAuthStore";
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl =
+  "http://ec2-18-117-137-113.us-east-2.compute.amazonaws.com:9777/api/v1/";
 
 export function Profile() {
-  const [token, setToken] = useLocalStorage("token", "");
+  const token = localStorage.getItem("token");
   const { data, isLoading, error, fetchData } = useFetch();
+  const { isAuthenticated, setAuthenticated } = useAuthStore();
 
   useEffect(async () => {
     await fetchData("get", apiUrl + "auth/profile", null, {
@@ -50,6 +51,16 @@ export function Profile() {
             <b>Nacimiento: </b>
             {new Date(data.object.dateOfBirth).toLocaleDateString("en-ES")}
           </p>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => {
+              setAuthenticated(false);
+              localStorage.removeItem("token");
+            }}
+          >
+            Cerrar Sesión
+          </button>
         </div>
       )}
     </>
