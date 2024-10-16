@@ -2,8 +2,8 @@ import { useEffect } from "preact/hooks";
 import { useFetch } from "../hooks/useFetch";
 import { useAuthStore } from "../hooks/useAuthStore";
 
-const apiUrl =
-  "http://ec2-18-117-137-113.us-east-2.compute.amazonaws.com:9777/api/v1/";
+const apiUrl = import.meta.env.VITE_API_URL
+//const apiUrl = "http://ec2-18-117-137-113.us-east-2.compute.amazonaws.com:9777/api/v1/";
 
 export function Profile() {
   const token = localStorage.getItem("token");
