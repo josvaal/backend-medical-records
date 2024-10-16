@@ -3,63 +3,63 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { route } from "preact-router";
 import { useFetch } from "../hooks/useFetch";
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL
 
 export function Profile() {
-  const [token, setToken] = useLocalStorage("token", "");
-  const { data, isLoading, error, fetchData } = useFetch();
+    const [token, setToken] = useLocalStorage("token", "");
+    const { data, isLoading, error, fetchData } = useFetch();
 
-  useEffect(async () => {
-    if (token == "") {
-      route("/login");
-      return;
-    }
+    useEffect(async () => {
+        if (token == "") {
+            route("/login");
+            return;
+        }
 
-    const response = await fetchData("get", apiUrl + "auth/profile", null, {
-      Authorization: `Bearer ${token}`,
-    });
-    if (response.status == 401) {
-      setToken("");
-    }
-  }, [token]);
+        const response = await fetchData("get", apiUrl + "auth/profile", null, {
+            Authorization: `Bearer ${token}`,
+        });
+        if (response.status == 401) {
+            setToken("");
+        }
+    }, [token]);
 
-  return (
-    <>
-      <h1 className="text-xl">Profile Page</h1>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
-      {data && (
-        <div>
-          <p>
-            <b>Nombre: </b>
-            {data.object.firstname}
-          </p>
-          <p>
-            <b>Apellido: </b>
-            {data.object.lastname}
-          </p>
-          <p>
-            <b>Correo: </b>
-            {data.object.email}
-          </p>
-          <p>
-            <b>Rol: </b>
-            {data.object.userRole}
-          </p>
-          <p>
-            <b>Nro. Celular: </b>
-            {data.object.phone}
-          </p>
-          <p>
-            <b>Dirección: </b>
-            {data.object.address}
-          </p>
-          <p>
-            <b>Nacimiento: </b>
-            {new Date(data.object.dateOfBirth).toLocaleDateString("en-ES")}
-          </p>
-        </div>
-      )}
-    </>
-  );
+    return (
+        <>
+            <h1 className="text-xl">Profile Page</h1>
+            {isLoading && <p>Loading...</p>}
+            {error && <p>Error: {error.message}</p>}
+            {data && (
+                <div>
+                    <p>
+                        <b>Nombre: </b>
+                        {data.object.firstname}
+                    </p>
+                    <p>
+                        <b>Apellido: </b>
+                        {data.object.lastname}
+                    </p>
+                    <p>
+                        <b>Correo: </b>
+                        {data.object.email}
+                    </p>
+                    <p>
+                        <b>Rol: </b>
+                        {data.object.userRole}
+                    </p>
+                    <p>
+                        <b>Nro. Celular: </b>
+                        {data.object.phone}
+                    </p>
+                    <p>
+                        <b>Dirección: </b>
+                        {data.object.address}
+                    </p>
+                    <p>
+                        <b>Nacimiento: </b>
+                        {new Date(data.object.dateOfBirth).toLocaleDateString("en-ES")}
+                    </p>
+                </div>
+            )}
+        </>
+    );
 }
