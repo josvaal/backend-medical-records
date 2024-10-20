@@ -36,3 +36,5 @@ build/
 .env
 /.env
 *.env
+
+backend-0.0.1-SNAPSHOT.jar
