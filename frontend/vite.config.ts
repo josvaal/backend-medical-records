@@ -11,5 +11,8 @@ export default defineConfig({
 	},
 	optimizeDeps: {
 		include: ["@fullcalendar/core", "@fullcalendar/daygrid", "@fullcalendar/interaction", "@fullcalendar/timegrid"],
+	},
+	server: {
+		port: 3000
 	}
 });

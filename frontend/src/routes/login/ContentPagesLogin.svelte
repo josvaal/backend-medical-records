@@ -75,7 +75,7 @@
 					<p class="mt-4">
 						<a
 							class="text-sm font-medium text-purple-600 hover:underline dark:text-purple-400"
-							href="/pages/forgot-password"
+							href="/forgot-password"
 						>
 							Forgot your password?
 						</a>
@@ -83,7 +83,7 @@
 					<p class="mt-1">
 						<a
 							class="text-sm font-medium text-purple-600 hover:underline dark:text-purple-400"
-							href="/pages/create-account"
+							href="/create-account"
 						>
 							Create account
 						</a>

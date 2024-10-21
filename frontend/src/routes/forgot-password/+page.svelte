@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ContentPages404 from './ContentPages404.svelte';
+	import ContentPagesForgotPassword from './ContentPagesForgotPassword.svelte';
 
 	let isDark: boolean = false;
 
@@ -12,5 +12,5 @@
 </script>
 
 <div class={isDark ? 'dark' : ''}>
-	<ContentPages404 />
+	<ContentPagesForgotPassword />
 </div>
