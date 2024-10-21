@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import Icon from '@iconify/svelte';
 </script>
 
@@ -28,22 +29,26 @@
 			<div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
 				<div class="w-full">
 					<h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">Crear Cuenta</h1>
-					<form>
+					<form method="post" use:enhance>
 						<div class="flex gap-3">
 							<label class="block text-sm w-1/2">
 								<span class="text-gray-700 dark:text-gray-400">Nombres</span>
 								<input
+									name="firstname"
 									class="form-input mt-1 block w-full rounded-md border-gray-300 text-sm focus:border-purple-400 focus:outline-none focus:ring-[3px] focus:ring-purple-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
 									placeholder="Juan"
 									type="text"
+									required
 								/>
 							</label>
 							<label class="block text-sm w-1/2">
 								<span class="text-gray-700 dark:text-gray-400">Apellidos</span>
 								<input
+									name="lastname"
 									class="form-input mt-1 block w-full rounded-md border-gray-300 text-sm focus:border-purple-400 focus:outline-none focus:ring-[3px] focus:ring-purple-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
 									placeholder="Pérez"
 									type="text"
+									required
 								/>
 							</label>
 						</div>
@@ -51,17 +56,21 @@
 							<label class="mt-4 block text-sm w-1/2">
 								<span class="text-gray-700 dark:text-gray-400">Correo</span>
 								<input
+									name="email"
 									class="form-input mt-1 block w-full rounded-md border-gray-300 text-sm focus:border-purple-400 focus:outline-none focus:ring-[3px] focus:ring-purple-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
 									placeholder="tucorreo@email.com"
 									type="email"
+									required
 								/>
 							</label>
 							<label class="mt-4 block text-sm w-1/2">
 								<span class="text-gray-700 dark:text-gray-400">Dirección</span>
 								<input
+									name="address"
 									class="form-input mt-1 block w-full rounded-md border-gray-300 text-sm focus:border-purple-400 focus:outline-none focus:ring-[3px] focus:ring-purple-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
 									placeholder="Calle Falsa 123"
 									type="text"
+									required
 								/>
 							</label>
 						</div>
@@ -69,17 +78,21 @@
 							<label class="mt-4 block text-sm w-1/2">
 								<span class="text-gray-700 dark:text-gray-400">Contraseña</span>
 								<input
+									name="password"
 									class="form-input mt-1 block w-full rounded-md border-gray-300 text-sm focus:border-purple-400 focus:outline-none focus:ring-[3px] focus:ring-purple-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
 									placeholder="***************"
 									type="password"
+									required
 								/>
 							</label>
 							<label class="mt-4 block text-sm w-1/2">
 								<span class="text-gray-700 dark:text-gray-400">Confirmar Contraseña</span>
 								<input
+									name="repeat_password"
 									class="form-input mt-1 block w-full rounded-md border-gray-300 text-sm focus:border-purple-400 focus:outline-none focus:ring-[3px] focus:ring-purple-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
 									placeholder="***************"
 									type="password"
+									required
 								/>
 							</label>
 						</div>
@@ -87,7 +100,9 @@
 							<label class="mt-4 block text-sm w-1/2">
 								<span class="text-gray-700 dark:text-gray-400">Fecha de Nacimiento</span>
 								<input
+									name="dateOfBirth"
 									class="form-input mt-1 block w-full rounded-md border-gray-300 text-sm focus:border-purple-400 focus:outline-none focus:ring-[3px] focus:ring-purple-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
+									placeholder="MM-DD-YYYY"
 									type="date"
 									required
 								/>
@@ -95,9 +110,9 @@
 							<label class="mt-4 block text-sm w-1/2">
 								<span class="text-gray-700 dark:text-gray-400">Nro. Celular</span>
 								<input
+									name="phone"
 									class="form-input mt-1 block w-full rounded-md border-gray-300 text-sm focus:border-purple-400 focus:outline-none focus:ring-[3px] focus:ring-purple-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:ring-gray-500"
 									placeholder="912-345-678"
-									pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
 									type="tel"
 									maxlength="9"
 									required
