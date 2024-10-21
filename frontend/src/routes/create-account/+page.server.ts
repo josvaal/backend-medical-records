@@ -1,14 +1,31 @@
+import { authRegister } from '$lib/database/auth.js';
 import { redirect, error } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ request, cookies }) => {
 		const formData = await request.formData();
 
-		const { isValid, errors } = verifyData(formData);
+		const { isValid, errors } = verifyData(formData)
 
 		if (isValid) {
-			throw redirect(302, "/login");
+			const data = await authRegister(
+				formData.get("firstname")?.toString() ?? "",
+				formData.get("lastname")?.toString() ?? "",
+				formData.get("email")?.toString() ?? "",
+				formData.get("password")?.toString() ?? "",
+				formData.get("dateOfBirth")?.toString() ?? "",
+				formData.get("phone")?.toString() ?? "",
+				formData.get("address")?.toString() ?? ""
+			);
+			if (data.object == null) {
+				const validationError = new Error('Validation error');
+				(validationError as any).errors = [data.message];
+				throw error(400, validationError);
+			} else {
+				cookies.set("token", data.object.token, { path: "/" });
+				throw redirect(302, "/");
+			}
 		} else {
 			const validationError = new Error('Validation error');
 			(validationError as any).errors = errors;

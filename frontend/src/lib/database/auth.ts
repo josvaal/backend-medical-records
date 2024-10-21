@@ -61,9 +61,9 @@ const authRegister = async (firstname: string, lastname: string, email: string, 
     try {
         const response = await fetch(url, options);
         const data = await response.json();
-        console.log(data);
+        return data;
     } catch (error) {
-        console.error(error);
+        return JSON.stringify(error);
     }
 }
 
