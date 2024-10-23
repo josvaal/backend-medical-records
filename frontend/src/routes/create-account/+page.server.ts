@@ -23,7 +23,11 @@ export const actions = {
 				(validationError as any).errors = [data.message];
 				throw error(400, validationError);
 			} else {
-				cookies.set("token", data.object.token, { path: "/" });
+				cookies.set("token", data.object.token, {
+					path: "/",
+					httpOnly: true
+					// Session Lifetime
+				});
 				throw redirect(302, "/");
 			}
 		} else {

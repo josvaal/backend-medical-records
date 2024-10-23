@@ -226,7 +226,7 @@
 							<!-- svelte-ignore a11y-invalid-attribute -->
 							<a
 								class="inline-flex w-full items-center rounded-md px-2 py-1 text-sm font-semibold transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-								href=""
+								href="/logout"
 							>
 								<svg
 									class="mr-3 h-4 w-4"
