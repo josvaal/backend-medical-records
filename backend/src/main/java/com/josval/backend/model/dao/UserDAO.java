@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDAO extends CrudRepository<User, Integer> {
-    Optional<User> findByEmail(String email);
+    Optional<User> findByDni(String dni);
+
     List<User> findAllByUserRole(UserRole userRole);
 }

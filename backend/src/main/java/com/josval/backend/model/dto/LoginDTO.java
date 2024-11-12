@@ -18,8 +18,8 @@ import java.io.Serializable;
 public class LoginDTO implements Serializable {
 	@NotEmpty
 	@Email
-    private String email;
-	
+	private String dni;
+
 	@NotEmpty
-    private String password;
+	private String password;
 }

@@ -35,181 +35,172 @@ public class AuthController {
 
 	@Autowired
 	private UserMapper userMapper;
-	
+
 	@Autowired
 	private JwtService jwtService;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptEncoder;
-	
+
 	@PostMapping("auth/register")
 	public ResponseEntity<?> register(
 			@Valid @RequestBody RegisterDTO registerDTO,
-			BindingResult result
-	) {
+			BindingResult result) {
 
 		if (result.hasErrors()) {
-            Map<String, String> errorsMap = new HashMap<>();
-            for (ObjectError error : result.getAllErrors()) {
-                FieldError fieldError = (FieldError) error;
-                errorsMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-            }
-            return new ResponseEntity<>(MessageResponse.builder()
-            		.message("Validation Error")
-            		.object(errorsMap)
-            		.build(),
-            		HttpStatus.BAD_REQUEST);
-        }
+			Map<String, String> errorsMap = new HashMap<>();
+			for (ObjectError error : result.getAllErrors()) {
+				FieldError fieldError = (FieldError) error;
+				errorsMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<>(MessageResponse.builder()
+					.message("Validation Error")
+					.object(errorsMap)
+					.build(),
+					HttpStatus.BAD_REQUEST);
+		}
 
 		try {
-			
-			if (userService.findByEmail(registerDTO.getEmail()) != null) {
+
+			if (userService.findByDni(registerDTO.getDni()) != null) {
 				return new ResponseEntity<>(MessageResponse.builder()
 						.message("Email address aready used")
 						.object(null)
 						.build(),
 						HttpStatus.BAD_REQUEST);
 			}
-			
-			
+
 			UserDTO user = UserDTO.builder()
 					.firstname(registerDTO.getFirstname())
 					.lastname(registerDTO.getLastname())
-					.email(registerDTO.getEmail())
+					.dni(registerDTO.getDni())
 					.password(bCryptEncoder.encode(registerDTO.getPassword()))
 					.userRole(registerDTO.getUserRole())
 					.dateOfBirth(registerDTO.getDateOfBirth())
 					.phone(registerDTO.getPhone())
 					.address(registerDTO.getAddress())
 					.build();
-			
-			String jwtToken = jwtService.createJwtToken(user);
-			
-			Map<String, Object> response = new HashMap<String, Object>();
-			response.put("token", jwtToken);
-			response.put("user", user);
-			
+
+			// String jwtToken = jwtService.createJwtToken(user);
+
+			// Map<String, Object> response = new HashMap<String, Object>();
+			// response.put("token", jwtToken);
+			// response.put("user", user);
 
 			userService.save(user);
-			
+
 			return new ResponseEntity<>(
-                    MessageResponse.builder()
-                            .message("Register successfully")
-                            .object(response)
-                            .build(),
-                            HttpStatus.OK);
-			
+					MessageResponse.builder()
+							.message("Register successfully")
+							.object(null)
+							.build(),
+					HttpStatus.OK);
+
 		} catch (Exception e) {
 			System.out.println("There is an exception: ");
 			e.printStackTrace();
 			return new ResponseEntity<>(MessageResponse.builder()
-                    		.message(e.getMessage())
-                    		.object(null)
-                    		.build(),
-                    		HttpStatus.INTERNAL_SERVER_ERROR);
+					.message(e.getMessage())
+					.object(null)
+					.build(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@PostMapping("auth/login")
 	public ResponseEntity<?> login(
 			@Valid @RequestBody LoginDTO loginDto,
-			BindingResult result
-	) {
-		
-		
+			BindingResult result) {
+
 		if (result.hasErrors()) {
-            Map<String, String> errorsMap = new HashMap<>();
-            for (ObjectError error : result.getAllErrors()) {
-                FieldError fieldError = (FieldError) error;
-                errorsMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-            }
-            return new ResponseEntity<>(MessageResponse.builder()
-            		.message("Validation Error")
-            		.object(errorsMap)
-            		.build(),
-            		HttpStatus.BAD_REQUEST);
-        }
-		
-		try {			
+			Map<String, String> errorsMap = new HashMap<>();
+			for (ObjectError error : result.getAllErrors()) {
+				FieldError fieldError = (FieldError) error;
+				errorsMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return new ResponseEntity<>(MessageResponse.builder()
+					.message("Validation Error")
+					.object(errorsMap)
+					.build(),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		try {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
-							loginDto.getEmail(),
-							loginDto.getPassword()
-					)
-			);
-			
-			User user = userService.findByEmail(loginDto.getEmail());
+							loginDto.getDni(),
+							loginDto.getPassword()));
+
+			User user = userService.findByDni(loginDto.getDni());
 			String jwtToken = jwtService.createJwtToken(userMapper.toUserDTO(user));
-			
+
 			Map<String, Object> response = new HashMap<String, Object>();
 			response.put("token", jwtToken);
 			response.put("user", userMapper.toUserDTO(user));
-			
-			
+
 			return new ResponseEntity<>(
-                    MessageResponse.builder()
-                            .message("Login successfully")
-                            .object(response)
-                            .build(),
-                            HttpStatus.OK);
-			
+					MessageResponse.builder()
+							.message("Login successfully")
+							.object(response)
+							.build(),
+					HttpStatus.OK);
+
 		} catch (Exception e) {
 			System.out.println("There is an exception: ");
 			e.printStackTrace();
 			return new ResponseEntity<>(MessageResponse.builder()
-                    		.message(e.getMessage())
-                    		.object(null)
-                    		.build(),
-                    		HttpStatus.INTERNAL_SERVER_ERROR);
+					.message(e.getMessage())
+					.object(null)
+					.build(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@GetMapping("/auth/profile")
 	public ResponseEntity<?> profile(
-			HttpServletRequest request
-	){
+			HttpServletRequest request) {
 		try {
-			
+
 			String bearerToken = request.getHeader("Authorization");
-	        if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
-	            return new ResponseEntity<>(MessageResponse.builder()
-	                    .message("Authorization Bearer token not found")
-	                    .object(null)
-	                    .build(),
-	                    HttpStatus.UNAUTHORIZED);
-	        }
-	        
-	        String token = bearerToken.substring(7);
-	        
-	        Claims claims = jwtService.getTokenClaims(token);
-	        if (claims == null) {
-	            return new ResponseEntity<>(MessageResponse.builder()
-	                    .message("Invalid Token")
-	                    .object(null)
-	                    .build(),
-	                    HttpStatus.UNAUTHORIZED);
-	        }
-	        
-	        String email = claims.getSubject();
-	        
-	        UserDTO user = userMapper.toUserDTO(userService.findByEmail(email));
-	        user.setPassword(null);
-	        
-	        return new ResponseEntity<>(MessageResponse.builder()
-	                .message("Profile retrieved successfully")
-	                .object(user)
-	                .build(),
-	                HttpStatus.OK);
-	        
+			if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
+				return new ResponseEntity<>(MessageResponse.builder()
+						.message("Authorization Bearer token not found")
+						.object(null)
+						.build(),
+						HttpStatus.UNAUTHORIZED);
+			}
+
+			String token = bearerToken.substring(7);
+
+			Claims claims = jwtService.getTokenClaims(token);
+			if (claims == null) {
+				return new ResponseEntity<>(MessageResponse.builder()
+						.message("Invalid Token")
+						.object(null)
+						.build(),
+						HttpStatus.UNAUTHORIZED);
+			}
+
+			String dni = claims.getSubject();
+
+			UserDTO user = userMapper.toUserDTO(userService.findByDni(dni));
+			user.setPassword(null);
+
+			return new ResponseEntity<>(MessageResponse.builder()
+					.message("Profile retrieved successfully")
+					.object(user)
+					.build(),
+					HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(MessageResponse.builder()
-	                .message(e.getMessage())
-	                .object(null)
-	                .build(),
-	                HttpStatus.INTERNAL_SERVER_ERROR);
+					.message(e.getMessage())
+					.object(null)
+					.build(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

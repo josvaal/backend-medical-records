@@ -14,7 +14,7 @@ import java.util.Date;
 public class RegisterDTO implements Serializable {
     private String firstname;
     private String lastname;
-    private String email;
+    private String dni;
     private String password;
     private UserRole userRole;
     private Date dateOfBirth;

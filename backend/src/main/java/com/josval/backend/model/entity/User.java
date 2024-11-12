@@ -29,8 +29,8 @@ public class User implements Serializable {
     @Column(name = "lastname")
     private String lastname;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "dni")
+    private String dni;
 
     @Column(name = "password")
     @Size(min = 6, message = "Minimun password length is 6 characters")

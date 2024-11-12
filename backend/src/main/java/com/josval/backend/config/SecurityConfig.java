@@ -24,48 +24,49 @@ import com.josval.backend.service.security.JwtAuthFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
-	@Autowired
-	private JwtAuthFilter filter;
-	
-	@Value("${FRONTEND_ORIGIN}")
-	private String origin;
-	
-	@Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+
+    @Autowired
+    private JwtAuthFilter filter;
+
+    @Value("${FRONTEND_ORIGIN}")
+    private String origin;
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-	
-	@Bean
+
+    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-        	.cors(cors -> cors.configurationSource(request -> {
-        		CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Arrays.asList(origin));
-                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-                config.setAllowedHeaders(Arrays.asList("*"));
-                config.setAllowCredentials(true);
-                return config;
-        	}))
-            .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/swagger-ui/**").permitAll()
-                .requestMatchers("/swagger-ui-custom.html").permitAll()
-                .requestMatchers("/v3/api-docs/**").permitAll()
-                .anyRequest().authenticated()
-                
-            )
-            .csrf(csrf -> csrf.disable())
-			.httpBasic(basic -> basic.disable())
-			.sessionManagement(session -> session.sessionCreationPolicy(
-					SessionCreationPolicy.STATELESS))
-			.addFilterBefore(filter,
-					UsernamePasswordAuthenticationFilter.class)
-			.build();
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(Arrays.asList(origin));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
+                    config.setAllowedHeaders(Arrays.asList("*"));
+                    config.setAllowCredentials(true);
+                    return config;
+                }))
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui-custom.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .anyRequest().authenticated()
+
+                )
+                .csrf(csrf -> csrf.disable())
+                .httpBasic(basic -> basic.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(
+                        SessionCreationPolicy.STATELESS))
+                .addFilterBefore(filter,
+                        UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

@@ -8,10 +8,16 @@ import java.util.List;
 
 public interface IUserService {
     List<User> listAll();
+
     User save(UserDTO userDTO);
+
     User findById(Integer id);
-    User findByEmail(String email);
+
+    User findByDni(String dni);
+
     List<User> findAllByUserRole(UserRole userRole);
+
     void delete(User user);
+
     boolean existsById(Integer id);
 }

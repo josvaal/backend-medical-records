@@ -17,26 +17,24 @@ public class UserAuthService implements UserDetailsService {
 
 	@Autowired
 	IUserService userService;
-	
+
 	@Autowired
 	UserMapper userMapper;
-	
+
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		
-		UserDTO user = userMapper.toUserDTO(userService.findByEmail(email));
-		
-		if(user != null) {
+	public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
+
+		UserDTO user = userMapper.toUserDTO(userService.findByDni(dni));
+
+		if (user != null) {
 			return User
-					.withUsername(user.getEmail())
+					.withUsername(user.getDni())
 					.password(user.getPassword())
 					.roles(user.getUserRole().name())
 					.build();
+		} else {
+			throw new UsernameNotFoundException("Usuario no encontrado con dni: " + dni);
 		}
-		else {
-	        throw new UsernameNotFoundException("Usuario no encontrado con email: " + email);
-	    }
 	}
-	
 
 }

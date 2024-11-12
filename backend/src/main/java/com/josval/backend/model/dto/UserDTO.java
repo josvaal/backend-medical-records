@@ -15,7 +15,7 @@ public class UserDTO implements Serializable {
     private Integer id;
     private String firstname;
     private String lastname;
-    private String email;
+    private String dni;
     private String password;
     private UserRole userRole;
     private Date dateOfBirth;
