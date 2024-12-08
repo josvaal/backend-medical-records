@@ -1,0 +1,13 @@
+.openapi-generator-ignore
+Apis/AppointmentControllerApi.md
+Apis/AuthControllerApi.md
+Apis/MedicalHistoryControllerApi.md
+Apis/PrescriptionControllerApi.md
+Apis/UserControllerApi.md
+Models/AppointmentDTO.md
+Models/LoginDTO.md
+Models/MedicalHistoryDTO.md
+Models/PrescriptionDTO.md
+Models/RegisterDTO.md
+Models/UserDTO.md
+README.md
